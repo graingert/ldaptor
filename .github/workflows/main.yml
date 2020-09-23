@@ -38,6 +38,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
+      - name: install openssl for windows
+        if: startsWith(runner.os, 'Windows') && startsWith(matrix.python-version, 'pypy')
+        run: |
+          choco install openssl -confirm
+          echo "::set-env name=LIB::C:\Program Files\OpenSSL-Win64\lib;%LIB%"
+          echo "::set-env name=INCLUDE::C:\Program Files\OpenSSL-Win64\include;%INCLUDE%"
+
       - name: Install
         run: |
           pip install tox
