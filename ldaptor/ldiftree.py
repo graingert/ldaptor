@@ -291,12 +291,12 @@ class LDIFTreeEntry(
         if not isinstance(other, LDIFTreeEntry):
             # We don't return NotImplemented so that we get the same
             # result in Python2 and Python3.
-            raise (TypeError, "unorderable types: {!r} > {!r}".format(self, other))
+            raise (TypeError, f"unorderable types: {self!r} > {other!r}")
         return self.dn < other.dn
 
     def __gt__(self, other):
         if not isinstance(other, LDIFTreeEntry):
-            raise (TypeError, "unorderable types: {!r} < {!r}".format(self, other))
+            raise (TypeError, f"unorderable types: {self!r} < {other!r}")
         return self.dn > other.dn
 
     def commit(self):
@@ -307,7 +307,7 @@ class LDIFTreeEntry(
         def eb_(err):
             from twisted.python import log
 
-            log.msg("[ERROR] Could not commit entry: {}.".format(self.dn))
+            log.msg(f"[ERROR] Could not commit entry: {self.dn}.")
             return False
 
         d.addErrback(eb_)
